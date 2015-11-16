@@ -1,0 +1,95 @@
+<% if session[:lgin] %>
+<%= form_tag(class: 'form', action: 'update', method: "post") do %>
+  <table style="text-align: right">
+    <tr>
+      <td class="tableheader" colspan="2">
+        User Profile
+      </td>
+    </tr>
+    <tr>
+      <td style="font-size:26px; text-align: center">
+        <div ><%= @currentuser[0].username %></div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <fieldset>
+          <%= label_tag(:email, "Email:") %>
+          <%= text_field_tag(:email, @currentuser[0].email) %>
+        </fieldset>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <fieldset>
+          <%= label_tag(:display_name, "Display Name:") %>r
+          <%= text_field_tag(:display_name, @currentuser[0].display_name) %>
+        </fieldset>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <fieldset>
+          <%= label_tag(:locatoin, "Location:") %>
+          <%= text_field_tag(:location, @currentuser[0].location) %>
+        </fieldset>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <fieldset>
+          <%= label_tag(:gender, "Gender:") %>
+          <%= text_field_tag(:gender, @currentuser[0].gender) %>
+        </fieldset>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= select_tag :org_id, options_from_collection_for_select(@orgs, 'id', 'orgname') %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <fieldset>
+          <%= label_tag(:title, "Title:") %>
+          <%= text_field_tag(:title, @currentuser[0].title) %>
+        </fieldset>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <fieldset>
+          <%= label_tag(:orgtype, "Type of Organization:") %>
+          <%= text_field_tag(:orgtype, @currentuser[0].orgtype) %>
+        </fieldset>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= select_tag :alignment_id, options_from_collection_for_select(@alignments, 'id', 'name') %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <fieldset>
+          <%= submit_tag("Update") %>
+        </fieldset>
+      </td>
+    </tr>
+  </table>
+<% end %>
+</td>
+</tr>
+</table>
+<% else %>
+Please loign before trying to edit your profile
+<% end %>
+<!--
+t.string :display_name
+t.string :location
+t.string :gender
+t.string :orgname
+t.string :title
+t.string :orgtype
+t.string :alignment
+-->

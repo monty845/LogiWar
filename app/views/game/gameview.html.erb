@@ -1,0 +1,164 @@
+<script type="text/javascript">
+
+      document.addEventListener("DOMContentLoaded", init, false);
+      var ctx;
+      var buttonstate=1;
+      var resources = 5;
+
+      function init()
+      {
+        ctx = document.getElementById("canvas").getContext("2d");
+        var canvas = document.getElementById("canvas");
+        canvas.addEventListener("mousedown", getPosition, false);
+        update();
+      }
+      var res = 25
+      var rectangle = function(rectx, recty, width, height){
+      	this.x = rectx;
+      	this.y = recty;
+      	this.w = width;
+      	this.h = height;
+      	this.name = "terrain";
+      	this.block = true;
+      };
+
+
+
+      var collidableObjects = [];
+
+      <%
+      count = 0
+      @mapitems.each do |item| %>
+      collidableObjects[<%= count %>] = new rectangle(<%= item.x %>,<%= item.y %>,25,25);
+
+      <%
+      count = count + 1
+      end %>
+
+      function getPosition(event)
+      {
+        var x = new Number();
+        var y = new Number();
+        var canvas = document.getElementById("canvas");
+
+        if (event.x != undefined && event.y != undefined)
+        {
+          x = event.x;
+          y = event.y;
+        }
+        else // Firefox method to get the position
+        {
+          x = event.clientX + document.body.scrollLeft +
+              document.documentElement.scrollLeft;
+          y = event.clientY + document.body.scrollTop +
+              document.documentElement.scrollTop;
+        }
+
+        x -= canvas.offsetLeft;
+        y -= canvas.offsetTop;
+
+        x = Math.floor(x / res) * res;
+        y = Math.floor(y / res) * res;
+
+        //alert("x: " + x + "  y: " + y);
+        //getObject(x,y);
+        if(x>=50 || y >= 100){
+          if(buttonstate == 1){
+            placeObject(x,y);
+          }else {
+            removeObject(x,y);
+          }
+        } else {
+          if(y<50){
+            //Button 1
+            console.log("Button 1 selected");
+            buttonstate = 1;
+            drawInterface();
+          }
+          else{
+            //Button 2
+            console.log("Button 2 selected");
+            buttonstate = 0;
+            drawInterface();
+          }
+        }
+      }
+
+      function drawInterface(){
+        ctx.fillStyle="lightgrey";
+        ctx.fillRect(0,0,50,100);
+        if(buttonstate == 1){
+          ctx.fillStyle="blue";
+          ctx.fillRect(0,0,50,50);
+        } else {
+          ctx.fillStyle="blue";
+          ctx.fillRect(0,50,50,50);
+        }
+        ctx.fillStyle="red";
+        ctx.font="20px Arial";
+        ctx.fillText(resources,500,20);
+        ctx.fillText("Add", 5, 25);
+        ctx.fillText("Rem", 5, 75);
+      }
+
+      function placeObject(x,y){
+        if(resources>0){
+          collidableObjects.push(new rectangle(x, y, 25, 25));
+          //console.log("Placed Object at " + x + "," + y);
+          resources--;
+          postPlace(x, y);
+          update();
+        }
+      }
+
+      function removeObject(x,y){
+
+        for(var i = 0; i < collidableObjects.length; i++){
+          if(collidableObjects[i].x == x && collidableObjects[i].y == y){
+            collidableObjects.splice(i, 1);
+            resources++;
+            update();
+            return;
+          }
+        }
+      }
+
+      function getObject(x, y){
+        for(var i=0; i<collidableObjects.length; i++){
+          if(x > collidableObjects[i].x && x < collidableObjects[i].x + collidableObjects[i].w){
+            if(y > collidableObjects[i].y && x < collidableObjects[i].y + collidableObjects[i].y){
+              alert("HIT! at " + x + "," + y + " ");
+            }
+          }
+
+        }
+        //update();
+      }
+      function postPlace(x , y){
+        post('/place', {
+          x: x,
+          y: y
+        }, function(data) {
+          location.reload();
+        }, function(error){
+          alert(error);
+        });
+      };
+
+
+      function update(){
+        //console.log("Updating");
+        ctx.clearRect(0,0,800,500);
+        ctx.fillStyle="green";
+        for(var i = 0; i<collidableObjects.length; i++){
+          //console.log("Draw");
+          ctx.fillRect(collidableObjects[i].x, collidableObjects[i].y, collidableObjects[i].h, collidableObjects[i].w);
+        }
+
+
+        drawInterface();
+
+      }
+
+    </script>
+<canvas id="canvas" width="640" height="360"></canvas>

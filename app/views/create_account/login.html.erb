@@ -1,0 +1,53 @@
+<% if flash[:autologin] %>
+  Automatically logged in as <%= session[:usrname] %> using your cookies. If that is not you, please <a href="/Logout"> click here </a> <br>
+  <a href="/Accounts"> Proceed to Accounts Page </a>
+<% elsif session[:lgin] %>
+  You already have an active sessions as user: <%= session[:usrname] %>. If that is not you, please <a href="/Logout"> click here </a>
+<% else %>
+<table style="width: 600px">
+  <tr>
+    <td class="tableheader">
+      <h1>Login</h1>
+    </td>
+  </tr>
+  <% if flash[:error] %>
+  <tr>
+    <td class="error">
+      Error: Invalid Username or Password
+    </td>
+  </tr>
+  <% end %>
+  <tr>
+    <td>
+<%= form_tag(class: 'form', action: 'verify', method: "post") do %>
+  <table style="text-align: right; width:100%">
+    <tr>
+      <td style="width:50%; paddding:0px;">
+        <fieldset>
+          <%= label_tag(:username, "Username:") %>
+          <%= text_field_tag(:username, flash[:user]) %>
+        </fieldset>
+      </td>
+      <td style="width:50%; padding:0px">
+        <a href="/CreateAccount">Go to create a new Account</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <fieldset>
+          <%= label_tag(:password, 'Password:')%>
+          <%= password_field_tag(:password) %>
+        </fieldset>
+      </td>
+      <td>
+        <fieldset>
+          <%= submit_tag("Login") %>
+        </fieldset>
+      </td>
+    </tr>
+  </table>
+<% end %>
+</td>
+</tr>
+</table>
+<% end %>

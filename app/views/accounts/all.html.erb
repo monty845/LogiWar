@@ -1,0 +1,45 @@
+<% if session[:lgin] %>
+<table>
+  <th>Number</th>
+  <th>Username</th>
+  <th>Email Address</th>
+  <th>Display Name</th>
+  <th>Location</th>
+  <th>gender</th>
+  <th>Organization</th>
+  <th>Title</th>
+  <th>Org Type</th>
+  <th>Alignment</th>
+<%   @row = 1 %>
+<% @Accounts.each do |account|
+
+  %>
+<tr>
+  <td> <%= @row %> </td>
+  <td> <%= account.username %> </td>
+  <td> <%= account.email %> </td>
+  <td> <%= account.display_name%> </td>
+  <td> <%= account.location%> </td>
+  <td> <%= account.gender%> </td>
+  <td> <%= account.org_id == nil ? 'nil' : account.org.orgname%> </td>
+  <td> <%= account.title%> </td>
+  <td> <%= account.orgtype%> </td>
+  <td> <%= account.alignment_id == nil ? 'nil' : account.alignment.name%> </td>
+</tr>
+<%
+@row = @row + 1
+end %>
+</table>
+<% else %>
+Please Login to view accounts
+<% end %>
+<!--
+
+t.string :display_name
+t.string :location
+t.string :gender
+t.string :orgname
+t.string :title
+t.string :orgtype
+t.string :alignment
+-->

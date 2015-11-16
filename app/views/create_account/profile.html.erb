@@ -1,0 +1,63 @@
+<% if session[:lgin] %>
+<table>
+  <tr>
+    <td class="tableheader" colspan="2">
+      User Profile
+    </td>
+  </tr>
+  <tr>
+    <td>Username:</td>
+    <td><%= @activeuser[0].username %></td>
+  </tr>
+  <tr>
+    <td>Email:</td>
+    <td><%= @activeuser[0].email %></td>
+  </tr>
+  <tr>
+    <td>Password:</td>
+    <td>****</td>
+  </tr>
+  <tr>
+    <td>Display Name:</td>
+    <td><%= @activeuser[0].display_name %></td>
+  </tr>
+  <tr>
+    <td>Location:</td>
+    <td><%= @activeuser[0].location %></td>
+  </tr>
+  <tr>
+    <td>Gender</td>
+    <td><%= @activeuser[0].gender %></td>
+  </tr>
+  <tr>
+    <td>Organization Name:</td>
+    <td><%= @activeuser[0].org_id == nil ? 'nil' : @activeuser[0].org.orgname %></td>
+  </tr>
+  <tr>
+    <td>Title:</td>
+    <td><%= @activeuser[0].title %></td>
+  </tr>
+  <tr>
+    <td>Type of Organization:</td>
+    <td><%= @activeuser[0].orgtype %></td>
+  </tr>
+  <tr>
+    <td>Alignment:</td>
+    <td><%= @activeuser[0].alignment == nil ? 'nil' : @activeuser[0].alignment.name %></td>
+  </tr>
+  <% if @friends.length > 0 %>
+  <tr>
+    <td>Friends:</td>
+    <td>
+      <% @friends.each do |friend| %>
+      <%= friend.username %> <br>
+      <% end %>
+    </td>
+
+  </tr>
+  <% end %>
+  <tr><td></td><td><a href="/Profile/edit">Edit Profile</a></td><tr>
+</table>
+<% else %>
+Please Login to edit your profile
+<% end %>

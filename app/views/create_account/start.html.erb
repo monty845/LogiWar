@@ -1,0 +1,93 @@
+<table style="width: 600px">
+  <tr>
+    <td class="tableheader">
+      Create an Account
+    </td>
+  </tr>
+  <% if flash[:erroruser] %>
+  <tr>
+    <td class="error">
+      Account Creation Error: Requested username is already taken
+    </td>
+  </tr>
+  <% end %>
+  <% if flash[:errorpass] %>
+  <tr>
+    <td class="error">
+      Account Creation Error: Requested password is not acceptable
+    </td>
+  </tr>
+  <% end %>
+  <% if flash[:error] %>
+  <tr>
+    <td class="error">
+      Account Creation Error: Server Busy, try again never
+    </td>
+  </tr>
+  <% end %>
+  <tr>
+    <td>
+<%= form_tag(class: 'form', action: 'create', method: "post") do %>
+  <table style="text-align: right; width:50">
+    <tr>
+      <td style="width:50%;">
+        <fieldset>
+          <%= label_tag(:username, "Username:") %>
+          <%= text_field_tag(:username, flash[:user]) %>
+        </fieldset>
+      </td>
+      <td style="width:50%">
+        <fieldset>
+          <%= label_tag(:email, 'Email Address:')%>
+          <%= text_field_tag(:email, flash[:email]) %>
+        </fieldset>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <fieldset>
+          <%= label_tag(:password, 'Password:')%>
+          <%= password_field_tag(:password) %>
+        </fieldset>
+      </td>
+      <td>
+        <fieldset>
+          <%= submit_tag("Create") %>
+        </fieldset>
+      </td>
+    </tr>
+  </table>
+<% end %>
+</td>
+</tr>
+</table><!--
+<form action="/subscribe" method="post">
+  <input id='subscribeInput' type="text" name="email" placeholder="subscribe@me.com">
+</form>
+<button onclick="subscribe()">Go</button>-->
+<!--
+<script>
+function subscribe(){
+  post('/subscribe', {
+    email: $('subscribeInput').val()
+  }, function(data) {
+    $('form[action="/subscribe"]').hide();
+  }, function(error){
+    alert(error);
+  });
+}
+</script>
+-->
+<!--
+<script>
+  setTimeout(function(){
+    get('/student_json', function(data){
+      $('#username').val(data.username);
+      $('#email').val(data.email);
+    }, function(error) {
+      console.log(error);
+      alert(error);
+    }
+  )}, 1000);
+</script>
+-->

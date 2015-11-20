@@ -21,6 +21,10 @@ Rails.application.routes.draw do
   get 'All' => 'accounts#all2'
   get 'Game' => 'game#gameview'
   post 'place' => 'game#place'
+  post 'remove' => 'game#remove'
+  get 'SCSS' => 'game#game'
+  get 'getstate.json' => 'game#getState'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

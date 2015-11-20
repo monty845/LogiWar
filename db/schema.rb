@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151116160917) do
+ActiveRecord::Schema.define(version: 20151116171845) do
 
   create_table "alignments", force: :cascade do |t|
     t.string   "name"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20151116160917) do
     t.datetime "updated_at",   null: false
     t.integer  "org_id"
     t.integer  "alignment_id"
-    t.integer  "builtpts"
+    t.integer  "buildpts"
   end
 
   create_table "users_users", id: false, force: :cascade do |t|

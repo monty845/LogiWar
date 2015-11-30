@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151130210340) do
+ActiveRecord::Schema.define(version: 20151130231752) do
 
   create_table "alignments", force: :cascade do |t|
     t.string   "name"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20151130210340) do
     t.integer  "capacity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "cost"
   end
 
   create_table "mapitems", force: :cascade do |t|

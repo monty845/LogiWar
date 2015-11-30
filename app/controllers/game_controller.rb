@@ -27,16 +27,16 @@ class GameController < ApplicationController
   def placeconnector
     check = Mapitem.where(x: params[:x]).where(y: params[:y])
     if check.length == 0
+      itemtype = Itemtype.find_by_id(params[:t])
       item = Mapitem.new
       player = User.find_by_username(session[:usrname])
-      if player.buildpts > 0
+      if player.buildpts >= itemtype.cost
         item.user = player
         item.x = params[:x]
         item.y = params[:y]
-        connector = Itemtype.find_by_id("3")
-        item.itemtype = connector
+        item.itemtype = itemtype
         item.save
-        player.buildpts = player.buildpts - 1
+        player.buildpts = player.buildpts - itemtype.cost
         player.save
         render text: 'OK'
       else
@@ -44,6 +44,10 @@ class GameController < ApplicationController
       end
     end
   end
+  def placebase
+
+  end
+
   def remove
     if session[:lgin]
       player = User.find_by_username(session[:usrname])
@@ -52,7 +56,7 @@ class GameController < ApplicationController
         item = items[0]
         if item.user.username == session[:usrname]
           item.destroy
-          player.buildpts = player.buildpts + 1
+          player.buildpts = player.buildpts + item.itemtype.cost
           player.save
           render text: 'OK'
         else

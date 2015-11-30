@@ -20,10 +20,11 @@ Rails.application.routes.draw do
   post 'update' => 'create_account#update'
   get 'All' => 'accounts#all2'
   get 'Game' => 'game#gameview'
-  post 'place' => 'game#place'
+  post 'place' => 'game#placeconnector'
   post 'remove' => 'game#remove'
   get 'SCSS' => 'game#game'
   get 'getstate.json' => 'game#getState'
+  get 'getpts.json' => 'game#getbuildpts'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

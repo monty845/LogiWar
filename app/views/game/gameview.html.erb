@@ -25,7 +25,7 @@
       <%
       count = 0
       @mapitems.each do |item| %>
-      collidableObjects[<%= count %>] = new rectangle(<%= item.x %>,<%= item.y %>,25,25,"<%= item.user.username %>");
+      collidableObjects[<%= count %>] = new rectangle(<%= item.x %>,<%= item.y %>,25,25,"<%= item.user_id %>");
 
       <%
       count = count + 1
@@ -101,22 +101,22 @@
               return;
             }
           }
-          collidableObjects.push(new rectangle(x, y, 25, 25, "<%= session[:usrname] %>"));
+          collidableObjects.push(new rectangle(x, y, 25, 25, "<%= @userid %>"));
           //console.log("Placed Object at " + x + "," + y);
           resources--;
           postPlace(x, y);
-          update();
+          //update();
         }
       }
       function removeObject(x,y){
 
         for(var i = 0; i < collidableObjects.length; i++){
           if(collidableObjects[i].x == x && collidableObjects[i].y == y){
-              if(collidableObjects[i].name == "<%= session[:usrname] %>"){
+              if(collidableObjects[i].name == "<%= @userid %>"){
               collidableObjects.splice(i, 1);
               resources++;
               removePlace(x,y);
-              update();
+              //update();
               return;
             } else {
               alert("Not yours");
@@ -140,26 +140,22 @@
           x: x,
           y: y
         }, function(data) {
-          $.get('/getstate.json').success(function(mapdata){
-            collidableObjects = [];
-            console.log(mapdata);
-            for(var i = 0; i < mapdata.length; i++){
-              collidableObjects[i] = mapdata[i];
-            }
+
           });
+
+          updatePts();
+          updateState();
           //location.reload();
-        }, function(error){
-          alert(error);
-        });
+
       };
       function removePlace(x , y){
         post('/remove', {
           x: x,
           y: y
         }, function(data) {
-          location.reload();
+          updateState();
         }, function(error){
-          alert(error);
+          console.log(error);
         });
       };
       function update(){
@@ -168,7 +164,7 @@
         for(var i = 0; i<collidableObjects.length; i++){
           //console.log("Draw");
 
-          if(collidableObjects[i].name == "<%= session[:usrname] %>"){ctx.fillStyle="green";} else {ctx.fillStyle="red";}
+          if(collidableObjects[i].name == "<%= @userid %>"){ctx.fillStyle="green";} else {ctx.fillStyle="red";}
           ctx.fillRect(collidableObjects[i].x, collidableObjects[i].y, collidableObjects[i].h, collidableObjects[i].w);
         }
 
@@ -176,7 +172,32 @@
         drawInterface();
 
       }
+      function updateState(){
+        $.get('/getstate.json').success(function(mapdata){
 
+          collidableObjects = [];
+          for(var i = 0; i < mapdata.length; i++){
+
+            collidableObjects.push(new rectangle(mapdata[i]['x'], mapdata[i]['y'], 25, 25, mapdata[i]['user_id']));
+          }
+          updatePts();
+          update();
+        }).fail(function(error){
+          //alert(error);
+          console.log("Error");
+          console.log(error);
+        });
+      }
+      function updatePts(){
+        $.get('/getpts.json').success(function(data){
+          console.log(data);
+          resources = data;
+        }).fail(function(error){
+          //alert(error);
+          console.log("Error");
+          console.log(error);
+      });
+      }
     </script>
 <canvas id="canvas" width="1080" height="700" style="background-color: #000;"></canvas>
 <% else %>

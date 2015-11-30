@@ -3,6 +3,7 @@ class GameController < ApplicationController
     @mapitems = Mapitem.all
     if session[:lgin]
       @buildpts = User.find_by_username(session[:usrname]).buildpts
+      @userid = User.find_by_username(session[:usrname]).id
     else
       @buildpts = 0
     end
@@ -10,11 +11,20 @@ class GameController < ApplicationController
   def getState
     @mapitems = Mapitem.all
     respond_to do |format|
-      format.json {render json: @people}
+      format.json {render json: @mapitems}
     end
-
   end
-  def place
+  def getbuildpts
+    if session[:lgin]
+      @buildpts = User.find_by_username(session[:usrname]).buildpts
+    else
+      @buildpts = 0
+    end
+    respond_to do |format|
+      format.json {render json: @buildpts}
+    end
+  end
+  def placeconnector
     check = Mapitem.where(x: params[:x]).where(y: params[:y])
     if check.length == 0
       item = Mapitem.new
@@ -23,6 +33,8 @@ class GameController < ApplicationController
         item.user = player
         item.x = params[:x]
         item.y = params[:y]
+        connector = Itemtype.find_by_id("3")
+        item.itemtype = connector
         item.save
         player.buildpts = player.buildpts - 1
         player.save

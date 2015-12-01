@@ -14,6 +14,7 @@ class CreateAccountController < ApplicationController
     user.title = params[:title]
     user.orgtype = params[:orgtype]
     user.alignment_id = params[:alignment_id]
+    user.buildpts = 15
     user.save
     redirect_to '/Profile'
   end

@@ -14,7 +14,6 @@ class CreateAccountController < ApplicationController
     user.title = params[:title]
     user.orgtype = params[:orgtype]
     user.alignment_id = params[:alignment_id]
-    user.buildpts = 15
     user.save
     redirect_to '/Profile'
   end
@@ -58,6 +57,7 @@ class CreateAccountController < ApplicationController
         new_user.username = params[:username]
         new_user.email = params[:email]
         new_user.password = temphash
+	new_user.buildpts = 15
 
         if new_user.save
           redirect_to '/Profile'

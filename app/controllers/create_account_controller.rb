@@ -21,7 +21,11 @@ class CreateAccountController < ApplicationController
 
   def profile
     @activeuser = User.where(username: session[:usrname])
-    @friends = @activeuser[0].users
+    if @activeuser.length > 0
+      @friends = @activeuser[0].users
+    else
+      @friends = nil
+    end
   end
 
   def edit

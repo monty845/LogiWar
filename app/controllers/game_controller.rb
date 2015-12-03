@@ -19,6 +19,9 @@ class GameController < ApplicationController
           search = Mapitem.where("x <= ?", item.x + 100).where("x >= ?", item.x - 100)
           search = search.where("y <= ?", item.y + 100).where("y >= ?", item.y - 100)
           search = search.where("itemtype_id = ?", 1).where("user_id = ?", item.user_id)
+          search2 = Mapitem.where("x <= ?", item.x + 100).where("x >= ?", item.x - 100)
+          search2 = search.where("y <= ?", item.y + 100).where("y >= ?", item.y - 100)
+          search2 = search.where("itemtype_id = ?", 1).where("user_id = ?", item.user_id)
           if search.length > 0
             extra = 10
           end
@@ -70,7 +73,7 @@ class GameController < ApplicationController
   end
   def placeconnector
     check = Mapitem.where(x: params[:x]).where(y: params[:y])
-    if check.length == 0 || (check.length == 1 && check[0].itemtype_id == 5)
+    if check.length == 0 || (check.length == 1 && check[0].itemtype_id == 5 && params[:t] == 4)
       itemtype = Itemtype.find_by_id(params[:t])
       item = Mapitem.new
       player = User.find_by_username(session[:usrname])

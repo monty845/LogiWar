@@ -27,6 +27,8 @@
       var offsetX = 0;
       var offsetY = 0;
       var keysDown = {};
+      var background = new Image();
+      background.src = "star-space-tile.jpg";
 
 
       function getPosition(event){
@@ -156,9 +158,9 @@
               return;
             }
           }
-          collidableObjects.push(new rectangle(x, y, 25, 25, "<%= @userid %>"));
+          //collidableObjects.push(new rectangle(x, y, 25, 25, "<%= @userid %>"));
           //console.log("Placed Object at " + x + "," + y);
-          resources--;
+          //resources--;
           postPlace(x,y,t);
           //update();
         }
@@ -169,8 +171,8 @@
         for(var i = 0; i < collidableObjects.length; i++){
           if(collidableObjects[i].x == x && collidableObjects[i].y == y){
               if(collidableObjects[i].name == "<%= @userid %>"){
-              collidableObjects.splice(i, 1);
-              resources++;
+              //collidableObjects.splice(i, 1);
+              //resources++;
               removePlace(x,y);
               //update();
               return;
@@ -223,6 +225,7 @@
       function update(){
         //console.log("Updating");
         ctx.clearRect(0,0,1080,760);
+        ctx.drawImage(background,0,0);
         for(var i = 0; i<collidableObjects.length; i++){
           if(collidableObjects[i].name == "<%= @userid %>" && collidableObjects[i].itemtype == 1){
             ctx.fillStyle="#4B6E5A"
@@ -306,7 +309,7 @@
       }
       function periodicUpdate(){
         updateState();
-        setTimeout(periodicUpdate, 5000);
+        setTimeout(periodicUpdate, 1000);
       }
     </script>
 <canvas id="canvas" width="1080" height="700" style="background-color: #000;"></canvas>

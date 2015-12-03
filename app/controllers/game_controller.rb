@@ -18,7 +18,7 @@ class GameController < ApplicationController
           search = Mapitem.where("x <= ?", item.x + 100).where("x >= ?", item.x - 100)
           search = search.where("y <= ?", item.y + 100).where("y >= ?", item.y - 100)
           search = search.where("itemtype_id = ?", 1).where("user_id = ?", item.user_id)
-          if search.lenght > 0
+          if search.length > 0
             extra = 10
           end
         else

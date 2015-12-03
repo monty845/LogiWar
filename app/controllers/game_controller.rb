@@ -14,6 +14,7 @@ class GameController < ApplicationController
     @mapitems.each do |item|
       if (item.itemtype_id == 4 || item.itemtype_id == 1)
         user = item.user
+        extra = 0
         if item.itemtype_id == 4
           search = Mapitem.where("x <= ?", item.x + 100).where("x >= ?", item.x - 100)
           search = search.where("y <= ?", item.y + 100).where("y >= ?", item.y - 100)

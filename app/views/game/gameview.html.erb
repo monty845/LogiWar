@@ -149,8 +149,8 @@
         ctx.fillText("Rem", 1, 225);
       }
       function placeObject(x,y,t){
-        x = x+offsetX;
-        y = y+offsetY;
+        x = x-offsetX;
+        y = y-offsetY;
         if(resources>0){
           for(var i = 0; i < collidableObjects.length; i++){
             if(collidableObjects[i].x == x && collidableObjects[i].y == y && collidableObjects[i].itemtype != 5){

@@ -90,8 +90,9 @@ class GameController < ApplicationController
       else
         render text: 'ERROR'
       end
+    else
+      render text: 'Error 2'
     end
-    render text: 'Error 2'
   end
   def placebase
 

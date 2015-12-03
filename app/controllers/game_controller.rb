@@ -29,12 +29,17 @@ class GameController < ApplicationController
         user.save
       end
       if item.itemtype_id == 3
-        @mapitems2 = Mapitem.all
-        @mapitems2.each do |target|
-          if !target.user.nil? && (item.x - target.x)^2 + (item.y - target.y)^2 < 10000 && item.user.id != target.user.id
-            target.health = target.health - 25
-            target.save
-            hit+=1
+        search = Mapitem.where("x <= ?", item.x + 100).where("x >= ?", item.x - 100)
+        search = search.where("y <= ?", item.y + 100).where("y >= ?", item.y - 100)
+        search = search.where("itemtype_id = ?", 1).where("user_id = ?", item.user_id)
+        if search.length > 0
+          @mapitems2 = Mapitem.all
+          @mapitems2.each do |target|
+            if !target.user.nil? && (item.x - target.x)^2 + (item.y - target.y)^2 < 10000 && item.user.id != target.user.id
+              target.health = target.health - 25
+              target.save
+              hit+=1
+            end
           end
         end
       end

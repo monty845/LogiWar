@@ -24,6 +24,8 @@
         this.health = health
       };
       var collidableObjects = [];
+      var offsetX = 0;
+      var offsetY = 0;
 
 
       function getPosition(event){
@@ -92,6 +94,29 @@
           }
         }
       }
+      addEventListener("keydown", function(e){
+	       keysDown[e.keyCode] = true;
+         updateLoc();
+      }, false);
+      addEventListener("keyup", function(e){
+	       delete keysDown[e.keyCode];
+       }, false);
+
+      function updateLoc(){
+        if (37 in keysDown){
+      		offsetX += 25;
+      	}
+      	if (39 in keysDown){
+      		offsetX -= 25;
+      	}
+      	if (38 in keysDown){
+      		offsetY += 25;
+      	}
+      	if (40 in keysDown){
+      		offsetY -= 25;
+      	}
+        update();
+      }
       function drawInterface(){
         ctx.fillStyle="lightgrey";
         ctx.fillRect(0,0,50,250);
@@ -121,6 +146,8 @@
         ctx.fillText("Rem", 1, 225);
       }
       function placeObject(x,y,t){
+        x = x+offsetX;
+        y = y+offsetY;
         if(resources>0){
           for(var i = 0; i < collidableObjects.length; i++){
             if(collidableObjects[i].x == x && collidableObjects[i].y == y && collidableObjects[i].itemtype != 5){
@@ -136,7 +163,8 @@
         }
       }
       function removeObject(x,y){
-
+        x=x+offsetX;
+        y=y+offsetY;
         for(var i = 0; i < collidableObjects.length; i++){
           if(collidableObjects[i].x == x && collidableObjects[i].y == y){
               if(collidableObjects[i].name == "<%= @userid %>"){
@@ -152,6 +180,8 @@
         }
       }
       function getObject(x, y){
+        x=x+offsetX;
+        y=y+offsetY;
         for(var i=0; i<collidableObjects.length; i++){
           if(x > collidableObjects[i].x && x < collidableObjects[i].x + collidableObjects[i].w){
             if(y > collidableObjects[i].y && x < collidableObjects[i].y + collidableObjects[i].y){
@@ -195,7 +225,7 @@
         for(var i = 0; i<collidableObjects.length; i++){
           if(collidableObjects[i].name == "<%= @userid %>" && collidableObjects[i].itemtype == 1){
             ctx.fillStyle="#4B6E5A"
-            ctx.fillRect(collidableObjects[i].x-125, collidableObjects[i].y-125, 275, 275)
+            ctx.fillRect(collidableObjects[i].x-100+offsetX, collidableObjects[i].y-100+offsetY, 225, 225)
           }
         }
         for(var i = 0; i<collidableObjects.length; i++){
@@ -208,37 +238,37 @@
           } else {
             ctx.fillStyle="red";
           }
-          ctx.fillRect(collidableObjects[i].x, collidableObjects[i].y, collidableObjects[i].h, collidableObjects[i].w);
+          ctx.fillRect(collidableObjects[i].x+offsetX, collidableObjects[i].y+offsetY, collidableObjects[i].h, collidableObjects[i].w);
           if(collidableObjects[i].itemtype == 1){
             ctx.fillStyle="blue";
-            ctx.fillRect(collidableObjects[i].x + 3, collidableObjects[i].y + 3, collidableObjects[i].h-6, collidableObjects[i].w-6);
+            ctx.fillRect(collidableObjects[i].x + 3+offsetX, collidableObjects[i].y + 3+offsetY, collidableObjects[i].h-6, collidableObjects[i].w-6);
           }
           if(collidableObjects[i].itemtype == 3){
             ctx.fillStyle="blue";
-            ctx.fillRect(collidableObjects[i].x + 3, collidableObjects[i].y + 10, collidableObjects[i].h-6, collidableObjects[i].w-20);
-            ctx.fillRect(collidableObjects[i].x + 10, collidableObjects[i].y + 3, collidableObjects[i].h-20, collidableObjects[i].w-6);
+            ctx.fillRect(collidableObjects[i].x + 3+offsetX, collidableObjects[i].y + 10+offsetY, collidableObjects[i].h-6, collidableObjects[i].w-20);
+            ctx.fillRect(collidableObjects[i].x + 10+offsetX, collidableObjects[i].y + 3+offsetY, collidableObjects[i].h-20, collidableObjects[i].w-6);
           }
           if(collidableObjects[i].itemtype == 4){
             ctx.fillStyle="blue";
-            ctx.fillText("X", collidableObjects[i].x + 5, collidableObjects[i].y + 18);
+            ctx.fillText("X", collidableObjects[i].x + 5+offsetX, collidableObjects[i].y + 18+offsetY);
           }
           if(collidableObjects[i].itemtype == 5){
             ctx.fillStyle="blue";
-            ctx.fillText("R", collidableObjects[i].x + 5, collidableObjects[i].y + 18);
+            ctx.fillText("R", collidableObjects[i].x + 5+offsetX, collidableObjects[i].y+offsetY + 18);
           }
           ctx.fillStyle="#FFFF00";
           if(collidableObjects[i].itemtype == 1){
             percent = collidableObjects[i].health/200
-            ctx.fillRect(collidableObjects[i].x, collidableObjects[i].y+19, collidableObjects[i].w * percent, 3);
+            ctx.fillRect(collidableObjects[i].x+offsetX, collidableObjects[i].y+19+offsetY, collidableObjects[i].w * percent, 3);
           }else if(collidableObjects[i].itemtype == 2){
             percent = collidableObjects[i].health/25
-            ctx.fillRect(collidableObjects[i].x, collidableObjects[i].y+19, collidableObjects[i].w * percent, 3);
+            ctx.fillRect(collidableObjects[i].x+offsetX, collidableObjects[i].y+19+offsetY, collidableObjects[i].w * percent, 3);
           }else if(collidableObjects[i].itemtype == 3){
             percent = collidableObjects[i].health/100
-            ctx.fillRect(collidableObjects[i].x, collidableObjects[i].y+19, collidableObjects[i].w * percent, 3);
+            ctx.fillRect(collidableObjects[i].x+offsetX, collidableObjects[i].y+19+offsetY, collidableObjects[i].w * percent, 3);
           }else if(collidableObjects[i].itemtype == 4){
             percent = collidableObjects[i].health/60
-            ctx.fillRect(collidableObjects[i].x, collidableObjects[i].y+19, collidableObjects[i].w * percent, 3);
+            ctx.fillRect(collidableObjects[i].x+offsetX, collidableObjects[i].y+19+offsetY, collidableObjects[i].w * percent, 3);
           }
 
         }

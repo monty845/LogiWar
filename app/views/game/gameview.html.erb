@@ -227,9 +227,9 @@
         ctx.clearRect(0,0,1080,760);
         var ptrn = ctx.createPattern(background, 'repeat'); // Create a pattern with this image, and set it to "repeat".
         ctx.fillStyle = ptrn;
-        ctx.translate((offsetX % 300), (offsetY % 300));
-        ctx.fillRect(-300, -150, canvas.width+600, canvas.height+600);
-        ctx.translate(-(offsetX % 300), -(offsetY % 300));
+        ctx.translate((offsetX % 400), (offsetY % 400));
+        ctx.fillRect(-400, -400, canvas.width+800, canvas.height+800);
+        ctx.translate(-(offsetX % 400), -(offsetY % 400));
         for(var i = 0; i<collidableObjects.length; i++){
           if(collidableObjects[i].name == "<%= @userid %>" && collidableObjects[i].itemtype == 1){
             ctx.fillStyle="#4B6E5A"

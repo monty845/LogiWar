@@ -73,7 +73,7 @@ class GameController < ApplicationController
   end
   def placeconnector
     check = Mapitem.where(x: params[:x]).where(y: params[:y])
-    if check.length == 0 || (check.length == 1 && check[0].itemtype_id == 5 && params[:t] == 4)
+    if check.length == 0 || (check.length == 1 && check[0].itemtype_id == 5 && params[:t] == "4")
       itemtype = Itemtype.find_by_id(params[:t])
       item = Mapitem.new
       player = User.find_by_username(session[:usrname])

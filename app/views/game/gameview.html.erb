@@ -164,8 +164,8 @@
         }
       }
       function removeObject(x,y){
-        x=x+offsetX;
-        y=y+offsetY;
+        x=x-offsetX;
+        y=y-offsetY;
         for(var i = 0; i < collidableObjects.length; i++){
           if(collidableObjects[i].x == x && collidableObjects[i].y == y){
               if(collidableObjects[i].name == "<%= @userid %>"){
@@ -181,8 +181,8 @@
         }
       }
       function getObject(x, y){
-        x=x+offsetX;
-        y=y+offsetY;
+        x=x-offsetX;
+        y=y-offsetY;
         for(var i=0; i<collidableObjects.length; i++){
           if(x > collidableObjects[i].x && x < collidableObjects[i].x + collidableObjects[i].w){
             if(y > collidableObjects[i].y && x < collidableObjects[i].y + collidableObjects[i].y){

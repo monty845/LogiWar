@@ -15,6 +15,9 @@ class GameController < ApplicationController
       if (item.itemtype_id == 4 || item.itemtype_id == 1)
         user = item.user
         if item.itemtype_id == 4
+          search = Mapitem.where("x <= ?", item.x + 100).where("x >= ?", item.x - 100)
+          search = search.where("y <= ?", item.y + 100).where("y >= ?", item.y - 100)
+          search = search.where("itemtype_id = ?", 1).where("user_id = ?", item.user_id)
           extra = 10
         else
           extra = 1

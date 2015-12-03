@@ -227,7 +227,7 @@
         ctx.clearRect(0,0,1080,760);
         var ptrn = context.createPattern(img, 'repeat'); // Create a pattern with this image, and set it to "repeat".
         context.fillStyle = ptrn;
-        context.fillRect(0-(offsetX % 300), 0-(offsetY % 300), canvas.width+300, canvas.height+300)
+        context.fillRect(0-(offsetX % 300), 0-(offsetY % 300), canvas.width+300, canvas.height+300);
         for(var i = 0; i<collidableObjects.length; i++){
           if(collidableObjects[i].name == "<%= @userid %>" && collidableObjects[i].itemtype == 1){
             ctx.fillStyle="#4B6E5A"

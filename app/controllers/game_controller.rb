@@ -38,7 +38,7 @@ class GameController < ApplicationController
         if search.length > 0
           @mapitems2 = Mapitem.all
           @mapitems2.each do |target|
-            if !target.user.nil? && (item.x - target.x)^2 + (item.y - target.y)^2 < 100 * 100 && item.user.id != target.user.id
+            if !target.user.nil? && ((item.x - target.x)^2 + (item.y - target.y)^2 < 100^2) && item.user.id != target.user.id
               target.health = target.health - 25
               target.save
               hit+=1

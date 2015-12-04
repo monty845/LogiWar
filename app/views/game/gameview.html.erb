@@ -256,11 +256,11 @@
             ctx.fillRect(collidableObjects[i].x + 3+offsetX, collidableObjects[i].y + 10+offsetY, collidableObjects[i].h-6, collidableObjects[i].w-20);
             ctx.fillRect(collidableObjects[i].x + 10+offsetX, collidableObjects[i].y + 3+offsetY, collidableObjects[i].h-20, collidableObjects[i].w-6);
             ctx.beginPath();
-            ctx.arc(collidableObjects[i].x + 12.5 + offsetX, collidableObjects[i].y + 12.5 + offsetY, 10, 0, 2 * Math.PI, false);
+            ctx.arc(collidableObjects[i].x + 12.5 + offsetX, collidableObjects[i].y + 12.5 + offsetY, 100, 0, 2 * Math.PI, false);
             //ctx.fillStyle = 'green';
             //ctx.fill();
-            ctx.lineWidth = 5;
-            ctx.strokeStyle = '#003300';
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "red";
             ctx.stroke();
           }
           if(collidableObjects[i].itemtype == 4){

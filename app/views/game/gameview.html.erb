@@ -1,7 +1,7 @@
 <% if session[:lgin] %>
+<canvas id="canvas" height="700" width="1080" style="background-color: black"></canvas>
 <script type="text/javascript">
-
-      document.addEventListener("DOMContentLoaded", init, false);
+$(document).ready(function(){init();});
       var ctx;
       var buttonstate=1;
       var resources = <%= @buildpts %>;
@@ -323,7 +323,6 @@
         setTimeout(periodicUpdate, 1000);
       }
     </script>
-<canvas id="canvas" width="1080" height="700" style="background-color: #000;"></canvas>
 <% else %>
 Login to play
 <% end %>
